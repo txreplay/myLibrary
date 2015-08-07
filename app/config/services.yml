@@ -1,0 +1,14 @@
+services:
+    mylib.tmdb_api:
+        class: AppBundle\Services\TmdbApiServices
+        arguments: ["@wtfz_tmdb.client"]
+
+    mylib.mylib_frontbundle_search:
+        class: AppBundle\Form\Type\SearchType
+        tags: 
+            - { name: form.type, alias: mylib_frontbundle_search }
+
+    mylib.twig.mylib_extension:
+        class: AppBundle\Twig\MylibExtension
+        tags:
+            - { name: twig.extension }

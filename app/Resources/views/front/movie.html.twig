@@ -1,0 +1,133 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} Homepage{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/mylibfront/css/*' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{# Variables #}
+	{% set imgtmdb = 'http://image.tmdb.org/t/p/original' %}
+	{% set poster = 'Affiche du film ' ~ movie.title %}
+
+	<div style="margin:0 auto;width:800px;">
+		<h2>{{ movie.title }} <small>sortie le  {{ movie.releaseDate.date|localizeddate('long', 'none') }}</small></h2>
+		<p>
+			{% for movieGenre in movie.genres %}
+			    <small><a href="{{ path('genre', { 'id': movieGenre.id}) }}">{{ movieGenre.name }}</a>, </small>
+			{% endfor %}
+		</p>
+		<img src="{{ imgtmdb ~ movie.backdropPath }}" alt="{{ poster }}" width="800" />
+		<br><br>
+		<blockquote>
+			<p>{{ movie.overview }}</p>
+		</blockquote>
+		{% if video.results.0 is defined and video.results.0.site == 'YouTube' %}
+			<iframe width="720" height="360" style="display:block;margin:0 auto;" src="https://www.youtube.com/embed/{{ video.results.0.key }}" frameborder="0" allowfullscreen></iframe>
+		{% endif %}
+
+		{% if movie.belongsToCollection is not null %}
+			<div id="collection">
+				<h3>Collection</h3>
+				<a href="{{ path('collection', { 'id': movie.belongsToCollection.id}) }}">
+					<p class="text-center">Voir tout les films de la saga {{ movie.belongsToCollection.name }}</p>
+					<img src="{{ 'http://image.tmdb.org/t/p/original' ~ movie.belongsToCollection.poster_path }}" class="img-responsive center-block" alt="" width="150" height="225"/>
+				</a>
+			</div>
+		{% endif %}
+
+		<div class="panel-group" id="infos" role="tablist" aria-multiselectable="true">
+		    <div class="panel panel-default">
+		        <div class="panel-heading" role="tab" id="headingInfos">
+		            <h4 class="panel-title">
+		                <a data-toggle="collapse" data-parent="#infos" href="#collapseInfos" aria-expanded="true" aria-controls="collapseInfos">
+		                    Informations
+		                </a>
+		            </h4>
+		        </div>
+		        <div id="collapseInfos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfos">
+		            <div class="panel-body">
+		                <p>Informations</p>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="panel-group" id="casting" role="tablist" aria-multiselectable="true">
+		    <div class="panel panel-default">
+		        <div class="panel-heading" role="tab" id="headingCasting">
+		            <h4 class="panel-title">
+		                <a data-toggle="collapse" data-parent="#casting" href="#collapseCasting" aria-expanded="true" aria-controls="collapseCasting">
+		                    Casting :
+		                </a>
+		            </h4>
+		        </div>
+		        <div id="collapseCasting" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCasting">
+		            <div class="panel-body">
+		                <ul class="list-unstyled list-inline text-center">
+							{% for actor in credits.cast %}
+								{% set imgActor = 'http://image.tmdb.org/t/p/original/' %}
+								{% set poster = imgActor ~ actor.profile_path %}
+								{% if actor.profile_path is null %}
+									{% set poster = 'http://www.ovrtur.com/reference/img/content/no_poster.png' %}
+								{% endif %}
+								<li>
+									<img src="{{ poster }}" alt="" width="150" height="225" />
+									<p class="text-center">
+										<small>
+											<a href="{{ path('actor', { 'id': actor.id}) }}">{{ actor.name }}</a>
+										</small><br/>
+										{{ actor.character }} 
+									</p>
+								</li>
+							{% endfor %}
+						</ul>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="panel-group" id="crew" role="tablist" aria-multiselectable="true">
+		    <div class="panel panel-default">
+		        <div class="panel-heading" role="tab" id="headingCrew">
+		            <h4 class="panel-title">
+		                <a data-toggle="collapse" data-parent="#crew" href="#collapseCrew" aria-expanded="true" aria-controls="collapseCrew">
+		                    Equipe Technique
+		                </a>
+		            </h4>
+		        </div>
+		        <div id="collapseCrew" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCrew">
+		            <div class="panel-body">
+		                <dl class="dl-horizontal">
+							{% for crew in credits.crew %}
+								<dt>{{ crew.name }}</dt>
+								<dd>{{ crew.department }}</dd>
+							{% endfor %}
+						</dl>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="panel-group" id="similarMovies" role="tablist" aria-multiselectable="true">
+		    <div class="panel panel-default">
+		        <div class="panel-heading" role="tab" id="headingSimilarMovies">
+		            <h4 class="panel-title">
+		                <a data-toggle="collapse" data-parent="#similarMovies" href="#collapseSimilarMovies" aria-expanded="true" aria-controls="collapseSimilarMovies">
+		                    Films similaires
+		                </a>
+		            </h4>
+		        </div>
+		        <div id="collapseSimilarMovies" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSimilarMovies">
+		            <div class="panel-body">
+						{% include ':front:list.html.twig' %}
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+{% endblock %}

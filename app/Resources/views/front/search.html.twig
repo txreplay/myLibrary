@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} Recherche{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/mylibfront/css/*' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-9">
+			<h2>Liste des films contenant le(s) mot(s): '<em>{{ movieRequest }}</em>'</h2>
+		</div>
+	</div>
+
+	<br>
+	<hr>
+	<br>
+
+	{% include ':front:list.html.twig' %}
+
+{% endblock %}

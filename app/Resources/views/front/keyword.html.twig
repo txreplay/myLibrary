@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} Keywords{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/mylibfront/css/*' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	<div id="container">
+		<div class="row">
+		<div class="col-md-9">
+			<h2>Films contenant le mot-clé : <em>{{ keyword.name }}</em></h2>
+		</div>
+	</div>
+
+	<br>
+	<hr>
+	<br>
+
+		{% include ':front:list.html.twig' %}
+	</div>
+{% endblock %}

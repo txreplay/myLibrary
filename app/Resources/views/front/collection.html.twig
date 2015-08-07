@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} Collection{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/mylibfront/css/*' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+	<div id="container">
+		{% set imgtmdb = 'http://image.tmdb.org/t/p/original' %}
+		{% set poster = 'Affiche du film ' ~ collection.name %}
+
+		<div style="margin:0 auto;width:800px;">
+			<h2>{{ collection.name }}</h2>
+			<img src="{{ imgtmdb ~ collection.backdrop_path }}" alt="{{ poster }}" width="800" />
+			<br><br>
+
+			<h3>Films de la saga :</h3>
+	
+			<ul id="movieList" class="list-unstyled list-inline text-center">
+				{% for movie in collection.parts %}
+					{% set imgtmdb = 'http://image.tmdb.org/t/p/original' %}
+					{% set poster = imgtmdb ~ movie.poster_path %}
+					{% if movie.poster_path is null %}
+						{% set poster = 'http://www.ovrtur.com/reference/img/content/no_poster.png' %}
+					{% endif %}
+					<li>
+						<a href="{{ path('movie', { 'id': movie.id}) }}">
+							<p class="text-center">{{ movie.title }}</p>
+							<img src="{{ poster }}" alt="" width="150" height="225" />
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+{% endblock %}
