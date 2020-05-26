@@ -3,9 +3,31 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}myLibrary - {% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <style>
+                #movieList li {
+                    margin:5px 0;
+                    width:165px;
+                    padding: 5px;
+                    border-radius: 10px;
+                }
+
+                #movieList li:hover {
+                    background: #eee;
+                }
+
+                #similarMovies #movieList li:nth-child(n+5) {
+                    display: none;
+                }
+
+                #actorImages li:nth-child(n+7) {
+                    display: none;
+                }
+            </style>
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
     </head>
     <body>
         {% include ':front:header.html.twig' %}
@@ -14,6 +36,7 @@
         {% block javascripts %}
             <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
         {% endblock %}
     </body>
 </html>

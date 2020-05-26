@@ -2,24 +2,27 @@
 
 namespace AppBundle\Twig;
 
+/**
+ * Class MylibExtension
+ * @package AppBundle\Twig
+ */
 class MylibExtension extends \Twig_Extension
 {
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
             new \Twig_SimpleFilter('time', array($this, 'timeFilter')),
         );
     }
 
-    public function priceFilter($number, $decimals = 0, $decPoint = ',', $thousandsSep = ' ')
-    {
-        $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = $price . ' €';
-
-        return $price;
-    }
-
+    /**
+     * @param $time
+     * @param null $format
+     * @return string
+     */
     public function timeFilter($time, $format = null)
     {
         if (empty ($format)) {
@@ -35,6 +38,9 @@ class MylibExtension extends \Twig_Extension
         return gmdate($format, $time);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'mylib_extension';

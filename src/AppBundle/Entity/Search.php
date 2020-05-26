@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Search
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Search
 {
+    use ORMBehaviors\Timestampable\Timestampable;
+
     /**
      * @var integer
      *
@@ -29,17 +32,22 @@ class Search
     private $movieRequest;
 
     /**
-     * @var datetime
      *
-     * @ORM\Column(name="date", type="datetime")
      */
-    private $date;
-
-
     public function __construct()
     {
         $this->movieRequest = 'N/C';
         $this->date = new \DateTime('now');
+    }
+
+    /**
+     * The __toString method allows a class to decide how it will react when it is converted to a string.
+     *
+     * @return string
+     */
+    function __toString()
+    {
+        return 'Search';
     }
 
     /**
@@ -73,28 +81,5 @@ class Search
     public function getMovieRequest()
     {
         return $this->movieRequest;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Search
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 }

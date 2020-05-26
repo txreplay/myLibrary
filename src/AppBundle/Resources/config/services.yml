@@ -1,0 +1,9 @@
+services:
+    mylib.form.type.search:
+        class: AppBundle\Form\Type\SearchType
+        tags:
+            - { name: form.type, alias: mylib_frontbundle_search }
+
+    mylib.manager.search:
+        class: AppBundle\Manager\SearchManager
+        arguments: [@doctrine.orm.entity_manager]

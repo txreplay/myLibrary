@@ -2,13 +2,6 @@
 
 {% block title %}{{ parent() }} Collection{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/mylibfront/css/*' %}
-	    <link rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
-{% endblock %}
-
 {% block body %}
 
 	<div id="container">

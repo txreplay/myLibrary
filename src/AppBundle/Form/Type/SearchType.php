@@ -27,7 +27,8 @@ class SearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Search'
+            'data_class' => 'AppBundle\Form\Dto\SearchDto',
+            'csrf_protection' => true,
         ));
     }
 

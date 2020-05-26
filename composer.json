@@ -22,7 +22,8 @@
         "wtfzdotnet/wtfz-tmdb-bundle": "~1.2",
         "knplabs/knp-paginator-bundle": "2.4.*@dev",
         "friendsofsymfony/user-bundle": "~1.3",
-        "stof/doctrine-extensions-bundle": "~1.1@dev"
+        "stof/doctrine-extensions-bundle": "~1.1@dev",
+        "knplabs/doctrine-behaviors": "1.0.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
